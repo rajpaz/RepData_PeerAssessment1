@@ -69,11 +69,12 @@ xyplot(intervalStepTable$intervalSteps~intervalStepTable$interval, main="Avarege
 ### Find interval where the maximum is achieved
 
 ```r
-which(intervalStepTable$intervalSteps==max(intervalStepTable$intervalSteps))
+intervalIndex = which(intervalStepTable$intervalSteps==max(intervalStepTable$intervalSteps))
+cat(sprintf("index where maximum is achieved is %d",intervalIndex))
 ```
 
 ```
-## [1] 104
+## index where maximum is achieved is 104
 ```
 
 
