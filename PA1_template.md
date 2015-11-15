@@ -121,4 +121,4 @@ xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
-       
+It appears that the peak interval on weekday or weekends is roughly the same though the peak value is higher on weekday compared to weekends. 

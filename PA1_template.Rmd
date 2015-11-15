@@ -71,4 +71,4 @@ xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=
                    x=list(seq(1,2500,by=50))),
        xlab="interval-index",ylab="Average-steps",type="l")
 ```
-       
+It appears that the peak interval on weekday or weekends is roughly the same though the peak value is higher on weekday compared to weekends. 
