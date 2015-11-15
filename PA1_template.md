@@ -41,7 +41,7 @@ df1[,"interval"]=as.factor(df1[,"interval"])
 
 ```r
 dailyStepTable = df1[,1:2] %>% group_by(date) %>%summarize(dailySteps = sum(steps,na.rm=TRUE))
-hist(dailyStepTable$dailySteps,main = paste("Histogram of Daily Steps"))
+hist(dailyStepTable$dailySteps,main = paste("Histogram of Daily Steps"),xlab="Daily Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
@@ -78,6 +78,8 @@ which(intervalStepTable$intervalSteps==max(intervalStepTable$intervalSteps))
 
 
 ## Imputing missing values
+I am replacing the median values (of steps) for a specific interval to replace NAs. I have tried average daily values but that replaced zeros with zersos. 
+
 
 ```r
 naCols = which(is.na(df1$steps))
@@ -86,7 +88,7 @@ naCols = which(is.na(df1$steps))
 
 df1$steps[naCols]=sapply(naCols,function(x) intervalStepTable$intervalSteps[which(intervalStepTable$interval==df1$interval[x])] )
 dailyStepTableImpute = df1 %>% group_by(date) %>%summarize(dailySteps = sum(steps,na.rm=TRUE))
-hist(dailyStepTableImpute$dailySteps,main = paste("Histogram of Daily Steps"))
+hist(dailyStepTableImpute$dailySteps,main = paste("Histogram of Daily Steps (with Imputed Values)"),xlab="Daily Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
@@ -111,7 +113,7 @@ df1[,"weeknd"]=as.factor(df1[,"weeknd"])
 
 summaryStats = df1 %>% group_by(weeknd,interval) %>%summarize(dailySteps = mean(steps,na.rm=TRUE))
 scales=list(y=list(tick.number=10),x=list(tick.number=10))
-xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=c(1,2),
+xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=c(1,2), main="Weekday and Weekend Comparisons",
        scales=list(y=list(seq(0,250,by=100)),
                    x=list(seq(1,2500,by=50))),
        xlab="interval-index",ylab="Average-steps",type="l")

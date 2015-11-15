@@ -23,7 +23,7 @@ df1[,"interval"]=as.factor(df1[,"interval"])
 ## What is mean total number of steps taken per day?
 ```{r}
 dailyStepTable = df1[,1:2] %>% group_by(date) %>%summarize(dailySteps = sum(steps,na.rm=TRUE))
-hist(dailyStepTable$dailySteps,main = paste("Histogram of Daily Steps"))
+hist(dailyStepTable$dailySteps,main = paste("Histogram of Daily Steps"),xlab="Daily Steps")
 meanDailySteps = mean(dailyStepTable$dailySteps)
 medianDailySteps = median(dailyStepTable$dailySteps)
 cat(sprintf("Mean Daily Steps: %.2f \nMedian Daily Steps: %.2f",meanDailySteps,medianDailySteps))
@@ -51,7 +51,7 @@ naCols = which(is.na(df1$steps))
 
 df1$steps[naCols]=sapply(naCols,function(x) intervalStepTable$intervalSteps[which(intervalStepTable$interval==df1$interval[x])] )
 dailyStepTableImpute = df1 %>% group_by(date) %>%summarize(dailySteps = sum(steps,na.rm=TRUE))
-hist(dailyStepTableImpute$dailySteps,main = paste("Histogram of Daily Steps"))
+hist(dailyStepTableImpute$dailySteps,main = paste("Histogram of Daily Steps (with Imputed Values)"),xlab="Daily Steps")
 meanDailyStepsImpute = mean(dailyStepTableImpute$dailySteps)
 medianDailyStepsImpute = median(dailyStepTableImpute$dailySteps)
 cat(sprintf("Mean without imputing: %.2f Mean with imputing: %.2f: \nMedian without imputing: %.2f Median with imputing: %.2f",
@@ -65,7 +65,7 @@ df1[,"weeknd"]=as.factor(df1[,"weeknd"])
 
 summaryStats = df1 %>% group_by(weeknd,interval) %>%summarize(dailySteps = mean(steps,na.rm=TRUE))
 scales=list(y=list(tick.number=10),x=list(tick.number=10))
-xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=c(1,2),
+xyplot(summaryStats$dailySteps~summaryStats$interval|summaryStats$weeknd,layout=c(1,2), main="Weekday and Weekend Comparisons",
        scales=list(y=list(seq(0,250,by=100)),
                    x=list(seq(1,2500,by=50))),
        xlab="interval-index",ylab="Average-steps",type="l")
